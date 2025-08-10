@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sekolah/common/colors.dart';
 import 'package:sekolah/common/lexend_textstyle.dart';
+import 'package:sekolah/screen/exam/create_exam.dart';
 import 'package:sekolah/screen/scan/scan_answer.dart';
 
 class HomePage extends StatefulWidget {
@@ -155,7 +156,14 @@ class _HomePageState extends State<HomePage> {
                         _quickAction(
                           "assets/icons/icon_test.png",
                           'Create Test',
-                          () {},
+                          () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CreateExamPage(),
+                              ),
+                            );
+                          },
                         ),
                         _quickAction(
                           "assets/icons/icon_scan.png",

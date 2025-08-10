@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sekolah/common/colors.dart';
 import 'package:sekolah/common/lexend_textstyle.dart';
-import 'package:sekolah/common/appbar.dart'; 
+import 'package:sekolah/common/appbar.dart';
 
 class ScanAnswerPage extends StatelessWidget {
   const ScanAnswerPage({super.key});
@@ -23,42 +23,58 @@ class ScanAnswerPage extends StatelessWidget {
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.all(20.w),
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () => Navigator.pop(context),
-                        child: Container(
-                          padding: EdgeInsets.all(4.w),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white),
-                            borderRadius: BorderRadius.circular(20.r),
-                          ),
-                          child: Icon(
-                            Icons.arrow_back,
-                            color: Colors.white,
-                            size: 20.sp,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          'Scan Answer',
-                          textAlign: TextAlign.center,
-                          style: LexendTextStyle.semiBold(
-                            16.sp,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 36.w),
-                    ],
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20.w,
+                    vertical: 12.h,
                   ),
-                ),
-                Text(
-                  'Scan lembar jawaban siswa',
-                  textAlign: TextAlign.center,
-                  style: LexendTextStyle.light(14.sp, color: Colors.white),
+                  child: SizedBox(
+                    height: 88.h,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: GestureDetector(
+                            onTap: () => Navigator.pop(context),
+                            child: Container(
+                              padding: EdgeInsets.all(4.w),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white),
+                                borderRadius: BorderRadius.circular(20.r),
+                              ),
+                              child: Icon(
+                                Icons.arrow_back,
+                                color: Colors.white,
+                                size: 20.sp,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Scan Answer',
+                              textAlign: TextAlign.center,
+                              style: LexendTextStyle.semiBold(
+                                16.sp,
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(height: 4.h),
+                            Text(
+                              'Scan lembar jawaban siswa',
+                              textAlign: TextAlign.center,
+                              style: LexendTextStyle.light(
+                                14.sp,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 const Spacer(),
                 Padding(
@@ -75,8 +91,8 @@ class ScanAnswerPage extends StatelessWidget {
                         child: Center(
                           child: Image.asset(
                             'assets/icons/icon_scanner.png',
-                            width: 90.w,
-                            height: 90.h,
+                            width: 60.w,
+                            height: 60.h,
                             fit: BoxFit.contain,
                           ),
                         ),

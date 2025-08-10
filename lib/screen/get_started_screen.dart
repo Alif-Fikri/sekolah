@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sekolah/common/lexend_textstyle.dart';
+import 'package:sekolah/screen/auth/login_screen.dart';
 
 class GetStartedScreen extends StatefulWidget {
   const GetStartedScreen({super.key});
@@ -53,6 +54,14 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
           duration: const Duration(milliseconds: 500),
           curve: Curves.easeInOut,
         );
+      } else {
+        Future.delayed(const Duration(seconds: 1), () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const LoginScreen()),
+          );
+        });
+        _autoPageTimer?.cancel();
       }
     });
   }
@@ -68,6 +77,11 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
   void _nextPage() {
     if (_currentPage < _pages.length - 1) {
       _goToPage(_currentPage + 1);
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+      );
     }
   }
 

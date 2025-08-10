@@ -14,4 +14,8 @@ class AppColors {
   static const Color badgemedium = Color(0xffFBBC05);
   static const Color badgehigh = Color(0xffFF4A1C);
   static const Color text1 = Color(0xff0B1D26);
+  static const Color white = Colors.white;
+  static const Color black = Colors.black;
+  static const Color grey = Colors.grey;
+  static const Color blue = Colors.blue;
 }
