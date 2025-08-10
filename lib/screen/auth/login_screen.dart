@@ -5,7 +5,6 @@ import 'package:sekolah/common/lexend_textstyle.dart';
 import 'package:sekolah/common/textfield.dart';
 import 'package:sekolah/screen/auth/register_screen.dart';
 import 'package:sekolah/screen/home/home_menu.dart';
-import 'package:sekolah/screen/home/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -65,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
+                      color: Colors.black.withValues(),
                       spreadRadius: 5,
                       blurRadius: 20,
                       offset: const Offset(0, 9),

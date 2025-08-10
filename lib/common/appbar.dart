@@ -33,14 +33,15 @@ class CustomBackgroundPainter extends CustomPainter {
     path.lineTo(0, 0);
     path.close();
 
-    canvas.drawShadow(path, Colors.black.withOpacity(0.1), 9.0, true);
+    canvas.drawShadow(path, Colors.black.withValues(), 9.0, true);
 
-    final paint = Paint()
-      ..shader = const LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [AppColors.main, AppColors.main],
-      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
+    final paint =
+        Paint()
+          ..shader = const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [AppColors.main, AppColors.main],
+          ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
 
     canvas.drawPath(path, paint);
   }
