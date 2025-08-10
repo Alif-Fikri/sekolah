@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:sekolah/common/appbar.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sekolah/common/colors.dart';
+import 'package:sekolah/common/lexend_textstyle.dart';
+import 'package:sekolah/common/appbar.dart'; 
 
 class ScanAnswerPage extends StatelessWidget {
-  const ScanAnswerPage({Key? key}) : super(key: key);
+  const ScanAnswerPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,119 +16,115 @@ class ScanAnswerPage extends StatelessWidget {
             painter: CustomBackgroundPainter(),
             size: Size(
               MediaQuery.of(context).size.width,
-              MediaQuery.of(context).size.height * 0.25,
+              MediaQuery.of(context).size.height * 0.18,
             ),
           ),
           SafeArea(
             child: Column(
               children: [
-                Container(
-                  padding: const EdgeInsets.all(20),
+                Padding(
+                  padding: EdgeInsets.all(20.w),
                   child: Row(
                     children: [
                       GestureDetector(
                         onTap: () => Navigator.pop(context),
                         child: Container(
-                          padding: const EdgeInsets.all(8),
+                          padding: EdgeInsets.all(4.w),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.circular(20.r),
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.arrow_back,
                             color: Colors.white,
-                            size: 20,
+                            size: 20.sp,
                           ),
                         ),
                       ),
-                      const Expanded(
+                      Expanded(
                         child: Text(
                           'Scan Answer',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: LexendTextStyle.semiBold(
+                            16.sp,
                             color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
-                      const SizedBox(width: 36),
+                      SizedBox(width: 36.w),
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 40),
-                  child: Text(
-                    'Scan lembar jawaban siswa',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
+                Text(
+                  'Scan lembar jawaban siswa',
+                  textAlign: TextAlign.center,
+                  style: LexendTextStyle.light(14.sp, color: Colors.white),
                 ),
                 const Spacer(),
-                Container(
-                  padding: const EdgeInsets.all(40),
+                Padding(
+                  padding: EdgeInsets.all(40.w),
                   child: Column(
                     children: [
                       Container(
-                        width: 80,
-                        height: 80,
+                        width: 90.w,
+                        height: 90.w,
                         decoration: BoxDecoration(
-                          color: const Color(0xFF5B7FE5),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: const Icon(
-                          Icons.scanner,
                           color: Colors.white,
-                          size: 40,
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        child: Center(
+                          child: Image.asset(
+                            'assets/icons/icon_scanner.png',
+                            width: 90.w,
+                            height: 90.h,
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 40),
-                      const Text(
+                      SizedBox(height: 40.h),
+                      Text(
                         'Siap untuk scan',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF1A1A1A),
+                        style: LexendTextStyle.bold(
+                          12.sp,
+                          color: const Color(0xFF1A1A1A),
                         ),
                       ),
-                      const SizedBox(height: 12),
-                      const Text(
+                      SizedBox(height: 6.h),
+                      Text(
                         'Arahkan kamera ke lembar jawaban siswa',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Color(0xFF666666),
+                        style: LexendTextStyle.light(
+                          11.sp,
+                          color: Colors.black,
                         ),
                       ),
-                      const SizedBox(height: 40),
+                      SizedBox(height: 40.h),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {},
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF5B7FE5),
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            backgroundColor: AppColors.main,
+                            padding: EdgeInsets.symmetric(vertical: 16.h),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(10.r),
                             ),
                             elevation: 0,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(Icons.camera_alt, size: 20),
-                              SizedBox(width: 8),
+                            children: [
+                              Icon(
+                                Icons.camera_alt,
+                                size: 20.sp,
+                                color: Colors.white,
+                              ),
+                              SizedBox(width: 8.w),
                               Text(
                                 'Buka Kamera',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
+                                style: LexendTextStyle.medium(
+                                  12.sp,
+                                  color: Colors.white,
                                 ),
                               ),
                             ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sekolah/common/colors.dart';
 import 'package:sekolah/common/lexend_textstyle.dart';
+import 'package:sekolah/screen/scan/scan_answer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -149,26 +150,39 @@ class _HomePageState extends State<HomePage> {
                         _quickAction(
                           "assets/icons/icon_sylabus.png",
                           'Syllabus Analysis',
+                          () {},
                         ),
                         _quickAction(
                           "assets/icons/icon_test.png",
                           'Create Test',
+                          () {},
                         ),
                         _quickAction(
                           "assets/icons/icon_scan.png",
                           'Scan Answer',
+                          () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ScanAnswerPage(),
+                              ),
+                            );
+                          },
                         ),
                         _quickAction(
                           "assets/icons/icon_log.png",
                           'Cheating Log',
+                          () {},
                         ),
                         _quickAction(
                           "assets/icons/icon_export.png",
                           'Export Nilai',
+                          () {},
                         ),
                         _quickAction(
                           "assets/icons/icon_history.png",
                           'History',
+                          () {},
                         ),
                       ],
                     ),
@@ -212,9 +226,9 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _quickAction(String assetPath, String label) {
+  Widget _quickAction(String assetPath, String label, VoidCallback onTap) {
     return OutlinedButton(
-      onPressed: () {},
+      onPressed: onTap,
       style: OutlinedButton.styleFrom(
         padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
         shape: RoundedRectangleBorder(
