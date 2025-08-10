@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sekolah/common/colors.dart';
-import 'package:sekolah/common/lexendtextstyle.dart';
+import 'package:sekolah/common/lexend_textstyle.dart';
+import 'package:sekolah/common/textfield.dart';
+import 'package:sekolah/screen/auth/register_screen.dart';
+import 'package:sekolah/screen/home/home_menu.dart';
+import 'package:sekolah/screen/home/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,7 +16,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _isButtonPressed = false;
-  bool _obscurePassword = true;
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -100,40 +103,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       SizedBox(height: 24.h),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.r),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              spreadRadius: 1,
-                              blurRadius: 4,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: _buildTextField(
-                          'Nama Pengguna',
-                          controller: _usernameController,
-                        ),
+                      CustomTextField(
+                        icon: Icons.person,
+                        controller: _usernameController,
+                        hintText: 'Nama Pengguna',
                       ),
                       SizedBox(height: 16.h),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.r),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              spreadRadius: 1,
-                              blurRadius: 4,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: _buildPasswordField(
-                          'Kata Sandi',
-                          controller: _passwordController,
-                        ),
+                      CustomPasswordField(
+                        controller: _passwordController,
+                        hintText: 'Kata Sandi',
                       ),
                       SizedBox(height: 8.h),
                       Align(
@@ -149,6 +127,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: 20.h),
                       ElevatedButton(
                         onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => HomeMenu()),
+                          );
                           setState(() {
                             _isButtonPressed = true;
                           });
@@ -220,7 +202,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RegisterScreen(),
+                                ),
+                              );
+                            },
                             child: Text(
                               'Daftar',
                               style: LexendTextStyle.semiBold(
@@ -239,63 +228,6 @@ class _LoginScreenState extends State<LoginScreen> {
             },
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildTextField(
-    String hint, {
-    required TextEditingController controller,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.splash,
-        borderRadius: BorderRadius.circular(12.r),
-      ),
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-          hintText: hint,
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.symmetric(vertical: 14.h),
-        ),
-        style: LexendTextStyle.medium(12.sp),
-      ),
-    );
-  }
-
-  Widget _buildPasswordField(
-    String hint, {
-    required TextEditingController controller,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.splash,
-        borderRadius: BorderRadius.circular(12.r),
-      ),
-      padding: EdgeInsets.only(left: 16.w, right: 8.w),
-      child: TextField(
-        controller: controller,
-        obscureText: _obscurePassword,
-        decoration: InputDecoration(
-          hintText: hint,
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.symmetric(vertical: 14.h),
-          suffixIcon: IconButton(
-            icon: Icon(
-              _obscurePassword ? Icons.visibility_off : Icons.visibility,
-              color: Colors.grey[600],
-              size: 20.h,
-            ),
-            onPressed: () {
-              setState(() {
-                _obscurePassword = !_obscurePassword;
-              });
-            },
-          ),
-        ),
-        style: LexendTextStyle.medium(12.sp),
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sekolah/common/lexendtextstyle.dart';
+import 'package:sekolah/common/lexend_textstyle.dart';
 
 class GetStartedScreen extends StatefulWidget {
   const GetStartedScreen({super.key});

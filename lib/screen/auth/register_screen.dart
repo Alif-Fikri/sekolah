@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sekolah/common/colors.dart';
-import 'package:sekolah/common/lexendtextstyle.dart';
+import 'package:sekolah/common/lexend_textstyle.dart';
+import 'package:sekolah/common/textfield.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -12,8 +13,6 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   bool _isButtonPressed = false;
-  bool _obscurePassword = true;
-  bool _obscureConfirmPassword = true;
   bool _isSLB = false;
   String? _selectedSchoolLevel;
 
@@ -116,36 +115,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       SizedBox(height: 24.h),
-                      _buildTextFieldWithShadow(
-                        'Nama Lengkap',
+                      CustomTextField(
                         controller: _nameController,
+                        hintText: 'Nama Lengkap',
                         icon: Icons.person_outline,
                       ),
                       SizedBox(height: 16.h),
-                      _buildTextFieldWithShadow(
-                        'Email',
+                      CustomTextField(
                         controller: _emailController,
+                        hintText: 'Email',
                         icon: Icons.email_outlined,
                         keyboardType: TextInputType.emailAddress,
                       ),
                       SizedBox(height: 16.h),
-                      _buildTextFieldWithShadow(
-                        'NIK (Nomor Induk Kependudukan)',
+                      CustomTextField(
                         controller: _nikController,
+                        hintText: 'NIK (Nomor Induk Kependudukan)',
                         icon: Icons.badge_outlined,
                         keyboardType: TextInputType.number,
                       ),
                       SizedBox(height: 16.h),
-                      _buildTextFieldWithShadow(
-                        'NUPTK (Nomor Unik Pendidik dan Tenaga Kependidikan)',
+                      CustomTextField(
                         controller: _nuptkController,
+                        hintText:
+                            'NUPTK (Nomor Unik Pendidik dan Tenaga Kependidikan)',
                         icon: Icons.work_outline,
-                        keyboardType: TextInputType.text,
                       ),
                       SizedBox(height: 16.h),
-                      _buildTextFieldWithShadow(
-                        'Nama Sekolah',
+                      CustomTextField(
                         controller: _schoolNameController,
+                        hintText: 'Nama Sekolah',
                         icon: Icons.school_outlined,
                       ),
                       SizedBox(height: 16.h),
@@ -238,29 +237,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       SizedBox(height: 16.h),
-                      _buildPasswordFieldWithShadow(
-                        'Kata Sandi',
+                      CustomPasswordField(
                         controller: _passwordController,
-                        obscure: _obscurePassword,
-                        onToggle: () {
-                          setState(() {
-                            _obscurePassword = !_obscurePassword;
-                          });
-                        },
+                        hintText: 'Kata Sandi',
                       ),
                       SizedBox(height: 16.h),
-                      _buildPasswordFieldWithShadow(
-                        'Konfirmasi Kata Sandi',
+                      CustomPasswordField(
                         controller: _confirmPasswordController,
-                        obscure: _obscureConfirmPassword,
-                        onToggle: () {
-                          setState(() {
-                            _obscureConfirmPassword = !_obscureConfirmPassword;
-                          });
-                        },
+                        hintText: 'Konfirmasi Kata Sandi',
                       ),
                       SizedBox(height: 20.h),
-
                       ElevatedButton(
                         onPressed: () {
                           setState(() {
@@ -297,7 +283,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             );
                           } else {
-    
+                            // TODO: proses registrasi
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -332,7 +318,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       SizedBox(height: 24.h),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -365,127 +350,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
             },
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildTextFieldWithShadow(
-    String hint, {
-    required TextEditingController controller,
-    IconData? icon,
-    TextInputType keyboardType = TextInputType.text,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: _buildTextField(
-        hint,
-        controller: controller,
-        icon: icon,
-        keyboardType: keyboardType,
-      ),
-    );
-  }
-
-  Widget _buildPasswordFieldWithShadow(
-    String hint, {
-    required TextEditingController controller,
-    required bool obscure,
-    required VoidCallback onToggle,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: _buildPasswordField(
-        hint,
-        controller: controller,
-        obscure: obscure,
-        onToggle: onToggle,
-      ),
-    );
-  }
-
-  Widget _buildTextField(
-    String hint, {
-    required TextEditingController controller,
-    IconData? icon,
-    TextInputType keyboardType = TextInputType.text,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.splash,
-        borderRadius: BorderRadius.circular(12.r),
-      ),
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: TextField(
-        controller: controller,
-        keyboardType: keyboardType,
-        decoration: InputDecoration(
-          hintText: hint,
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.symmetric(vertical: 14.h),
-          prefixIcon:
-              icon != null
-                  ? Icon(icon, color: Colors.grey[600], size: 20.h)
-                  : null,
-        ),
-        style: LexendTextStyle.medium(12.sp),
-      ),
-    );
-  }
-
-  Widget _buildPasswordField(
-    String hint, {
-    required TextEditingController controller,
-    required bool obscure,
-    required VoidCallback onToggle,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.splash,
-        borderRadius: BorderRadius.circular(12.r),
-      ),
-      padding: EdgeInsets.only(left: 16.w, right: 8.w),
-      child: TextField(
-        controller: controller,
-        obscureText: obscure,
-        decoration: InputDecoration(
-          hintText: hint,
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.symmetric(vertical: 14.h),
-          prefixIcon: Icon(
-            Icons.lock_outline,
-            color: Colors.grey[600],
-            size: 20.h,
-          ),
-          suffixIcon: IconButton(
-            icon: Icon(
-              obscure ? Icons.visibility_off : Icons.visibility,
-              color: Colors.grey[600],
-              size: 20.h,
-            ),
-            onPressed: onToggle,
-          ),
-        ),
-        style: LexendTextStyle.medium(12.sp),
       ),
     );
   }
