@@ -70,7 +70,7 @@ class CreateExamPage extends StatelessWidget {
                                   "Siapkan Ujian Untuk Siswa",
                                   textAlign: TextAlign.center,
                                   style: LexendTextStyle.light(
-                                    11.sp,
+                                    12.sp,
                                     color: Colors.white,
                                   ),
                                 ),

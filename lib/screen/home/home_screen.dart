@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sekolah/common/colors.dart';
 import 'package:sekolah/common/lexend_textstyle.dart';
+import 'package:sekolah/screen/home/cheating/cheating_log.dart';
 import 'package:sekolah/screen/home/quick_action/exam/create_exam.dart';
 import 'package:sekolah/screen/home/quick_action/export/export_nilai.dart';
 import 'package:sekolah/screen/home/quick_action/scan/scan_answer.dart';
@@ -181,7 +182,14 @@ class _HomePageState extends State<HomePage> {
                         _quickAction(
                           "assets/icons/icon_log.png",
                           'Cheating Log',
-                          () {},
+                          () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CheatingLogPage(),
+                              ),
+                            );
+                          },
                         ),
                         _quickAction(
                           "assets/icons/icon_export.png",

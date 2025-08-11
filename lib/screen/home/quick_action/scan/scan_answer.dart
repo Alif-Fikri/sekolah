@@ -66,7 +66,7 @@ class ScanAnswerPage extends StatelessWidget {
                               'Scan lembar jawaban siswa',
                               textAlign: TextAlign.center,
                               style: LexendTextStyle.light(
-                                11.sp,
+                                12.sp,
                                 color: Colors.white,
                               ),
                             ),
