@@ -8,6 +8,8 @@ class Inputfield extends StatelessWidget {
   final String? hint;
   final TextEditingController? controller;
   final TextInputType keyboardType;
+  final bool readOnly;
+  final VoidCallback? onTap;
 
   const Inputfield({
     super.key,
@@ -15,6 +17,8 @@ class Inputfield extends StatelessWidget {
     this.hint,
     this.controller,
     this.keyboardType = TextInputType.text,
+    this.readOnly =  false,
+    this.onTap,
   });
 
   @override
