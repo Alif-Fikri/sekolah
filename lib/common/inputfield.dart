@@ -10,6 +10,7 @@ class Inputfield extends StatelessWidget {
   final TextInputType keyboardType;
   final bool readOnly;
   final VoidCallback? onTap;
+  final FormFieldValidator<String>? validator;
 
   const Inputfield({
     super.key,
@@ -17,8 +18,9 @@ class Inputfield extends StatelessWidget {
     this.hint,
     this.controller,
     this.keyboardType = TextInputType.text,
-    this.readOnly =  false,
+    this.readOnly = false,
     this.onTap,
+    this.validator,
   });
 
   @override
@@ -28,9 +30,12 @@ class Inputfield extends StatelessWidget {
       children: [
         Text(label, style: LexendTextStyle.bold(12.sp, color: AppColors.black)),
         SizedBox(height: 6.h),
-        TextField(
+        TextFormField(
           controller: controller,
           keyboardType: keyboardType,
+          readOnly: readOnly,
+          onTap: onTap,
+          validator: validator,
           style: LexendTextStyle.regular(12.sp, color: AppColors.black),
           decoration: InputDecoration(
             hintText: hint,

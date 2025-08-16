@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sekolah/common/appbar.dart';
 import 'package:sekolah/common/colors.dart';
 import 'package:sekolah/common/lexend_textstyle.dart';
+import 'package:sekolah/screen/home/monitoring/create_class.dart';
 
 class MonitoringPage extends StatelessWidget {
   const MonitoringPage({super.key});
@@ -72,21 +73,31 @@ class MonitoringPage extends StatelessWidget {
                           activeExams: "3 Ujian Aktif",
                         ),
                         SizedBox(height: 16.h),
-                        Container(
-                          padding: EdgeInsets.all(12.w),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey.shade400,
-                              style: BorderStyle.solid,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CreateClassPage(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(12.w),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.grey.shade400,
+                                style: BorderStyle.solid,
+                              ),
+                              borderRadius: BorderRadius.circular(12.r),
                             ),
-                            borderRadius: BorderRadius.circular(12.r),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "+ Tambah Kelas",
-                              style: LexendTextStyle.regular(
-                                10.sp,
-                                color: Colors.black,
+                            child: Center(
+                              child: Text(
+                                "+ Tambah Kelas",
+                                style: LexendTextStyle.regular(
+                                  10.sp,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
                           ),

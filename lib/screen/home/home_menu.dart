@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sekolah/common/bottom_nav.dart';
 import 'package:sekolah/screen/home/home_screen.dart';
-import 'package:sekolah/screen/home/monitoring_screen.dart';
+import 'package:sekolah/screen/home/monitoring/monitoring_screen.dart';
 import 'package:sekolah/screen/home/profile_screen.dart';
 
 class HomeMenu extends StatefulWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sekolah/common/appbar.dart';
 import 'package:sekolah/common/colors.dart';
 import 'package:sekolah/common/inputfield.dart';
 import 'package:sekolah/common/lexend_textstyle.dart';
+import 'package:sekolah/common/appbar.dart';
 
 class CreateExamPage extends StatelessWidget {
   const CreateExamPage({super.key});
@@ -163,65 +163,68 @@ class CreateExamPage extends StatelessWidget {
                     showUpload: false,
                     onDownload: () {},
                   ),
-                  SizedBox(height: 20.h),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: OutlinedButton.icon(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.save_outlined,
-                            color: AppColors.black,
-                            size: 18,
-                          ),
-                          label: Text(
-                            "Simpan Draft",
-                            style: LexendTextStyle.medium(
-                              12.sp,
-                              color: AppColors.black,
-                            ),
-                          ),
-                          style: OutlinedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(vertical: 14.h),
-                            side: const BorderSide(color: AppColors.black),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.r),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 12.w),
-                      Expanded(
-                        child: ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.send,
-                            color: AppColors.white,
-                            size: 18,
-                          ),
-                          label: Text(
-                            "Publikasikan",
-                            style: LexendTextStyle.medium(
-                              12.sp,
-                              color: AppColors.white,
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.main,
-                            padding: EdgeInsets.symmetric(vertical: 14.h),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.r),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  SizedBox(height: 80.h),
                 ],
               ),
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.all(16.w),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              offset: const Offset(0, -1),
+              blurRadius: 4,
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: OutlinedButton.icon(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.save_outlined,
+                  color: AppColors.black,
+                  size: 18,
+                ),
+                label: Text(
+                  "Simpan Draft",
+                  style: LexendTextStyle.medium(12.sp, color: AppColors.black),
+                ),
+                style: OutlinedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 14.h),
+                  side: const BorderSide(color: AppColors.black),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(width: 12.w),
+            Expanded(
+              child: ElevatedButton.icon(
+                onPressed: () {},
+                icon: const Icon(Icons.send, color: AppColors.white, size: 18),
+                label: Text(
+                  "Publikasikan",
+                  style: LexendTextStyle.medium(12.sp, color: AppColors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.main,
+                  padding: EdgeInsets.symmetric(vertical: 14.h),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

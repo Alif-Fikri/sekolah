@@ -32,25 +32,47 @@ class CustomBottomNav extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: List.generate(icons.length, (index) {
           final bool isSelected = index == currentIndex;
+
           return GestureDetector(
             onTap: () => onTap(index),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeOut,
-              padding: EdgeInsets.all(12.w),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: isSelected ? AppColors.main : Colors.transparent,
-              ),
               transform: Matrix4.translationValues(
                 0,
-                isSelected ? -30.h : -10,
+                isSelected ? -40.h : -10.h,
                 0,
               ),
-              child: Icon(
-                icons[index],
-                size: 24.sp,
-                color: isSelected ? Colors.white : AppColors.main,
+              child: AnimatedScale(
+                duration: const Duration(milliseconds: 300),
+                scale: isSelected ? 1.2 : 1.0,
+                curve: Curves.easeOut,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      width: 60.w,
+                      height: 60.w,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color:
+                            isSelected ? AppColors.profile : Colors.transparent,
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(12.w),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: isSelected ? AppColors.main : Colors.transparent,
+                      ),
+                      child: Icon(
+                        icons[index],
+                        size: isSelected ? 28.sp : 26.sp,
+                        color: isSelected ? Colors.white : AppColors.main,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
