@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sekolah/common/colors.dart';
 import 'package:sekolah/common/lexend_textstyle.dart';
+import 'package:sekolah/screen/home/absen_screen.dart';
+import 'package:sekolah/screen/home/export_absen.dart';
 import 'package:sekolah/screen/home/notification/notification_screen.dart';
 import 'package:sekolah/screen/home/quick_action/cheating/cheating_log.dart';
 import 'package:sekolah/screen/home/quick_action/exam/create_exam.dart';
@@ -100,7 +102,14 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(width: 8.w),
                         Expanded(
                           child: ElevatedButton.icon(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AbsensiPage(),
+                                ),
+                              );
+                            },
                             icon: Image.asset(
                               'assets/icons/icon_manajemen.png',
                               height: 15.h,
@@ -126,7 +135,14 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(height: 8.h),
                     Center(
                       child: ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RekapAbsensiPage(),
+                            ),
+                          );
+                        },
                         icon: Image.asset(
                           'assets/icons/icon_absensi.png',
                           height: 15.h,
