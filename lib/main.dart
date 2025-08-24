@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sekolah/screen/auth/login_screen.dart';
 import 'package:sekolah/screen/auth/register_screen.dart';
 import 'package:sekolah/screen/get_started_screen.dart';
+import 'package:sekolah/screen/home/manajemen_siswa.dart';
 import 'package:sekolah/screen/home/quick_action/scan/scan_answer.dart';
 
 void main() {
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
             scaffoldBackgroundColor: Colors.white,
             useMaterial3: true,
           ),
-          home: GetStartedScreen(),
+          home: ManajemenSiswaPage(),
         );
       },
     );

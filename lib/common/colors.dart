@@ -21,4 +21,5 @@ class AppColors {
   static const Color notif = Color(0xffB2C7FF);
   static const Color text2 = Color(0xff4F4F4F);
   static const Color profile = Color(0xffECEFF9);
+  static const Color field = Color(0xffD9D9D9);
 }

@@ -4,6 +4,7 @@ import 'package:sekolah/common/colors.dart';
 import 'package:sekolah/common/lexend_textstyle.dart';
 import 'package:sekolah/screen/home/absen_screen.dart';
 import 'package:sekolah/screen/home/export_absen.dart';
+import 'package:sekolah/screen/home/manajemen_siswa.dart';
 import 'package:sekolah/screen/home/notification/notification_screen.dart';
 import 'package:sekolah/screen/home/quick_action/cheating/cheating_log.dart';
 import 'package:sekolah/screen/home/quick_action/exam/create_exam.dart';
@@ -78,7 +79,14 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Expanded(
                           child: ElevatedButton.icon(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AbsensiPage(),
+                                ),
+                              );
+                            },
                             icon: Image.asset(
                               'assets/icons/icon_absensi.png',
                               height: 15.h,
@@ -106,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => AbsensiPage(),
+                                  builder: (context) => ManajemenSiswaPage(),
                                 ),
                               );
                             },
