@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sekolah/screen/auth/login_screen.dart';
 import 'package:sekolah/screen/auth/register_screen.dart';
 import 'package:sekolah/screen/get_started_screen.dart';
-import 'package:sekolah/screen/home/manajemen_siswa.dart';
+import 'package:sekolah/screen/home/manajemen_siswa/daftar_tab.dart';
 import 'package:sekolah/screen/home/quick_action/scan/scan_answer.dart';
 
 void main() {
