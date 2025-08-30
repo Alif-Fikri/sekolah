@@ -39,7 +39,7 @@ class ManajemenTabs extends StatelessWidget {
                     Text(
                       label,
                       style: LexendTextStyle.regular(
-                        12.sp,
+                        11.sp,
                         color: selected ? AppColors.main : AppColors.grey,
                       ),
                     ),

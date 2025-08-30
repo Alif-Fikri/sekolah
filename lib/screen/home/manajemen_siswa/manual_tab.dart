@@ -115,6 +115,14 @@ class ManualTabState extends State<ManualTab> {
         borderRadius: BorderRadius.circular(8.r),
         borderSide: BorderSide(color: AppColors.grey.withOpacity(0.35)),
       ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8.r),
+        borderSide: BorderSide(color: AppColors.grey.withOpacity(0.35)),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8.r),
+        borderSide: BorderSide(color: AppColors.main, width: 2),
+      ),
     );
   }
 
@@ -131,6 +139,21 @@ class ManualTabState extends State<ManualTab> {
     );
   }
 
+  BoxDecoration _boxDecoration() {
+    return BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(8.r),
+      border: Border.all(color: AppColors.grey.withOpacity(0.35)),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.05),
+          blurRadius: 4,
+          offset: Offset(0, 2),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -140,7 +163,6 @@ class ManualTabState extends State<ManualTab> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 8.h),
             Row(
               children: [
                 Icon(
@@ -149,10 +171,7 @@ class ManualTabState extends State<ManualTab> {
                   size: 18.sp,
                 ),
                 SizedBox(width: 8.w),
-                Text(
-                  'Tambah Siswa Manual',
-                  style: LexendTextStyle.regular(12.sp),
-                ),
+                Text('Tambah Siswa Manual', style: LexendTextStyle.bold(12.sp)),
               ],
             ),
             SizedBox(height: 8.h),
@@ -163,25 +182,35 @@ class ManualTabState extends State<ManualTab> {
             SizedBox(height: 12.h),
             _label('Nama Lengkap', required: true),
             SizedBox(height: 4.h),
-            TextFormField(
-              controller: _nameCtrl,
-              validator:
-                  (v) =>
-                      v == null || v.trim().isEmpty ? 'Nama wajib diisi' : null,
-              style: LexendTextStyle.regular(12.sp, color: AppColors.black),
-              decoration: _whiteDecoration(hint: 'Masukkan Nama Lengkap'),
+            Container(
+              decoration: _boxDecoration(),
+              child: TextFormField(
+                controller: _nameCtrl,
+                validator:
+                    (v) =>
+                        v == null || v.trim().isEmpty
+                            ? 'Nama wajib diisi'
+                            : null,
+                style: LexendTextStyle.regular(12.sp, color: AppColors.black),
+                decoration: _whiteDecoration(hint: 'Masukkan Nama Lengkap'),
+              ),
             ),
             SizedBox(height: 12.h),
             _label('NISN', required: true),
             SizedBox(height: 4.h),
-            TextFormField(
-              controller: _nisnCtrl,
-              keyboardType: TextInputType.number,
-              validator:
-                  (v) =>
-                      v == null || v.trim().isEmpty ? 'NISN wajib diisi' : null,
-              style: LexendTextStyle.regular(12.sp, color: AppColors.black),
-              decoration: _whiteDecoration(hint: 'Masukkan NISN'),
+            Container(
+              decoration: _boxDecoration(),
+              child: TextFormField(
+                controller: _nisnCtrl,
+                keyboardType: TextInputType.number,
+                validator:
+                    (v) =>
+                        v == null || v.trim().isEmpty
+                            ? 'NISN wajib diisi'
+                            : null,
+                style: LexendTextStyle.regular(12.sp, color: AppColors.black),
+                decoration: _whiteDecoration(hint: 'Masukkan NISN'),
+              ),
             ),
             SizedBox(height: 12.h),
             Row(
@@ -192,37 +221,46 @@ class ManualTabState extends State<ManualTab> {
                     children: [
                       _label('Tingkat Sekolah', required: true),
                       SizedBox(height: 4.h),
-                      DropdownButtonFormField<String>(
-                        
-                        value: _schoolLevel,
-                        items:
-                            widget.schoolLevels
-                                .map(
-                                  (e) => DropdownMenuItem(
-                                    value: e,
-                                    child: Text(e),
-                                  ),
-                                )
-                                .toList(),
-                        onChanged: (v) => setState(() => _schoolLevel = v),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          isDense: true,
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 10.w,
-                            vertical: 10.h,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.r),
-                            borderSide: BorderSide(
-                              color: AppColors.grey.withOpacity(0.35),
+                      Container(
+                        decoration: _boxDecoration(),
+                        child: DropdownButtonFormField<String>(
+                          dropdownColor: AppColors.white,
+                          value: _schoolLevel,
+                          items:
+                              widget.schoolLevels
+                                  .map(
+                                    (e) => DropdownMenuItem(
+                                      value: e,
+                                      child: Text(
+                                        e,
+                                        style: LexendTextStyle.regular(
+                                          12.sp,
+                                          color: AppColors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                          onChanged: (v) => setState(() => _schoolLevel = v),
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            isDense: true,
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 10.w,
+                              vertical: 10.h,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.r),
+                              borderSide: BorderSide(
+                                color: AppColors.grey.withOpacity(0.35),
+                              ),
                             ),
                           ),
+                          validator:
+                              (v) =>
+                                  v == null || v.isEmpty ? 'Pilih level' : null,
                         ),
-                        validator:
-                            (v) =>
-                                v == null || v.isEmpty ? 'Pilih level' : null,
                       ),
                     ],
                   ),
@@ -234,58 +272,77 @@ class ManualTabState extends State<ManualTab> {
                     children: [
                       _label('Jenis Kelamin', required: true),
                       SizedBox(height: 4.h),
-                      DropdownButtonFormField<String>(
-                        value: _gender,
-                        items:
-                            ['Laki-laki', 'Perempuan']
-                                .map(
-                                  (g) => DropdownMenuItem(
-                                    value: g,
-                                    child: Text(g),
-                                  ),
-                                )
-                                .toList(),
-                        onChanged: (v) => setState(() => _gender = v),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          isDense: true,
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 10.w,
-                            vertical: 10.h,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.r),
-                            borderSide: BorderSide(
-                              color: AppColors.grey.withOpacity(0.35),
+                      Container(
+                        decoration: _boxDecoration(),
+                        child: DropdownButtonFormField<String>(
+                          dropdownColor: AppColors.white,
+                          value: _gender,
+                          items:
+                              ['Laki-laki', 'Perempuan']
+                                  .map(
+                                    (g) => DropdownMenuItem(
+                                      value: g,
+                                      child: Text(
+                                        g,
+                                        style: LexendTextStyle.regular(
+                                          12.sp,
+                                          color: AppColors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                          onChanged: (v) => setState(() => _gender = v),
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            isDense: true,
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 10.w,
+                              vertical: 10.h,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.r),
+                              borderSide: BorderSide(
+                                color: AppColors.grey.withOpacity(0.35),
+                              ),
                             ),
                           ),
+                          validator:
+                              (v) =>
+                                  v == null || v.isEmpty
+                                      ? 'Pilih jenis kelamin'
+                                      : null,
                         ),
-                        validator:
-                            (v) =>
-                                v == null || v.isEmpty
-                                    ? 'Pilih jenis kelamin'
-                                    : null,
                       ),
                     ],
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 10.h),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    'Sekolah Luar Biasa (SLB)?',
-                    style: LexendTextStyle.regular(12.sp),
+            SizedBox(height: 12.h),
+            _label('Sekolah Luar Biasa (SLB)?'),
+            SizedBox(height: 4.h),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+              decoration: _boxDecoration(),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Apakah siswa berasal dari SLB?',
+                      style: LexendTextStyle.regular(12.sp),
+                    ),
                   ),
-                ),
-                Switch(
-                  value: _isSlb,
-                  onChanged: (v) => setState(() => _isSlb = v),
-                ),
-              ],
+                  Switch(
+                    activeColor: AppColors.main,
+                    inactiveTrackColor: AppColors.grey.withOpacity(0.2),
+                    inactiveThumbColor: AppColors.main,
+                    value: _isSlb,
+                    onChanged: (v) => setState(() => _isSlb = v),
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 12.h),
             Row(
@@ -296,18 +353,23 @@ class ManualTabState extends State<ManualTab> {
                     children: [
                       _label('Tempat Lahir', required: true),
                       SizedBox(height: 4.h),
-                      TextFormField(
-                        controller: _tempatLahirCtrl,
-                        validator:
-                            (v) =>
-                                v == null || v.trim().isEmpty
-                                    ? 'Wajib diisi'
-                                    : null,
-                        style: LexendTextStyle.regular(
-                          12.sp,
-                          color: AppColors.black,
+                      Container(
+                        decoration: _boxDecoration(),
+                        child: TextFormField(
+                          controller: _tempatLahirCtrl,
+                          validator:
+                              (v) =>
+                                  v == null || v.trim().isEmpty
+                                      ? 'Wajib diisi'
+                                      : null,
+                          style: LexendTextStyle.regular(
+                            12.sp,
+                            color: AppColors.black,
+                          ),
+                          decoration: _whiteDecoration(
+                            hint: 'Kota Tempat Lahir',
+                          ),
                         ),
-                        decoration: _whiteDecoration(hint: 'Kota Tempat Lahir'),
                       ),
                     ],
                   ),
@@ -322,23 +384,26 @@ class ManualTabState extends State<ManualTab> {
                       GestureDetector(
                         onTap: _pickDate,
                         child: AbsorbPointer(
-                          child: TextFormField(
-                            controller: _tglLahirCtrl,
-                            readOnly: true,
-                            validator:
-                                (v) =>
-                                    v == null || v.trim().isEmpty
-                                        ? 'Wajib diisi'
-                                        : null,
-                            style: LexendTextStyle.regular(
-                              12.sp,
-                              color: AppColors.black,
-                            ),
-                            decoration: _whiteDecoration(
-                              hint:
-                                  _tglLahirCtrl.text.isEmpty
-                                      ? 'hh/bb/tt'
-                                      : _tglLahirCtrl.text,
+                          child: Container(
+                            decoration: _boxDecoration(),
+                            child: TextFormField(
+                              controller: _tglLahirCtrl,
+                              readOnly: true,
+                              validator:
+                                  (v) =>
+                                      v == null || v.trim().isEmpty
+                                          ? 'Wajib diisi'
+                                          : null,
+                              style: LexendTextStyle.regular(
+                                12.sp,
+                                color: AppColors.black,
+                              ),
+                              decoration: _whiteDecoration(
+                                hint:
+                                    _tglLahirCtrl.text.isEmpty
+                                        ? 'hh/bb/tt'
+                                        : _tglLahirCtrl.text,
+                              ),
                             ),
                           ),
                         ),
@@ -351,62 +416,77 @@ class ManualTabState extends State<ManualTab> {
             SizedBox(height: 12.h),
             _label('Alamat', required: true),
             SizedBox(height: 4.h),
-            TextFormField(
-              controller: _alamatCtrl,
-              validator:
-                  (v) => v == null || v.trim().isEmpty ? 'Wajib diisi' : null,
-              style: LexendTextStyle.regular(12.sp, color: AppColors.black),
-              decoration: _whiteDecoration(hint: 'Masukkan Alamat'),
-              maxLines: 2,
+            Container(
+              decoration: _boxDecoration(),
+              child: TextFormField(
+                controller: _alamatCtrl,
+                validator:
+                    (v) => v == null || v.trim().isEmpty ? 'Wajib diisi' : null,
+                style: LexendTextStyle.regular(12.sp, color: AppColors.black),
+                decoration: _whiteDecoration(hint: 'Masukkan Alamat'),
+                maxLines: 2,
+              ),
             ),
             SizedBox(height: 12.h),
             _label('Email', required: true),
             SizedBox(height: 4.h),
-            TextFormField(
-              controller: _emailCtrl,
-              keyboardType: TextInputType.emailAddress,
-              validator: (v) {
-                if (v == null || v.trim().isEmpty) return 'Email wajib diisi';
-                if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(v)) {
-                  return 'Format email tidak valid';
-                }
-                return null;
-              },
-              style: LexendTextStyle.regular(12.sp, color: AppColors.black),
-              decoration: _whiteDecoration(hint: 'email@example.com'),
+            Container(
+              decoration: _boxDecoration(),
+              child: TextFormField(
+                controller: _emailCtrl,
+                keyboardType: TextInputType.emailAddress,
+                validator: (v) {
+                  if (v == null || v.trim().isEmpty) return 'Email wajib diisi';
+                  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(v)) {
+                    return 'Format email tidak valid';
+                  }
+                  return null;
+                },
+                style: LexendTextStyle.regular(12.sp, color: AppColors.black),
+                decoration: _whiteDecoration(hint: 'email@example.com'),
+              ),
             ),
             SizedBox(height: 12.h),
             _label('No. Telp', required: true),
             SizedBox(height: 4.h),
-            TextFormField(
-              controller: _phoneCtrl,
-              keyboardType: TextInputType.phone,
-              validator:
-                  (v) => v == null || v.trim().isEmpty ? 'Wajib diisi' : null,
-              style: LexendTextStyle.regular(12.sp, color: AppColors.black),
-              decoration: _whiteDecoration(hint: 'Masukkan No Telp'),
+            Container(
+              decoration: _boxDecoration(),
+              child: TextFormField(
+                controller: _phoneCtrl,
+                keyboardType: TextInputType.phone,
+                validator:
+                    (v) => v == null || v.trim().isEmpty ? 'Wajib diisi' : null,
+                style: LexendTextStyle.regular(12.sp, color: AppColors.black),
+                decoration: _whiteDecoration(hint: 'Masukkan No Telp'),
+              ),
             ),
             SizedBox(height: 12.h),
             _label('Nama Wali Murid', required: true),
             SizedBox(height: 4.h),
-            TextFormField(
-              controller: _waliCtrl,
-              validator:
-                  (v) => v == null || v.trim().isEmpty ? 'Wajib diisi' : null,
-              style: LexendTextStyle.regular(12.sp, color: AppColors.black),
-              decoration: _whiteDecoration(hint: 'Nama Wali Murid'),
+            Container(
+              decoration: _boxDecoration(),
+              child: TextFormField(
+                controller: _waliCtrl,
+                validator:
+                    (v) => v == null || v.trim().isEmpty ? 'Wajib diisi' : null,
+                style: LexendTextStyle.regular(12.sp, color: AppColors.black),
+                decoration: _whiteDecoration(hint: 'Nama Wali Murid'),
+              ),
             ),
             SizedBox(height: 12.h),
             _label('Agama', required: true),
             SizedBox(height: 4.h),
-            TextFormField(
-              controller: _agamaCtrl,
-              validator:
-                  (v) => v == null || v.trim().isEmpty ? 'Wajib diisi' : null,
-              style: LexendTextStyle.regular(12.sp, color: AppColors.black),
-              decoration: _whiteDecoration(hint: 'Agama'),
+            Container(
+              decoration: _boxDecoration(),
+              child: TextFormField(
+                controller: _agamaCtrl,
+                validator:
+                    (v) => v == null || v.trim().isEmpty ? 'Wajib diisi' : null,
+                style: LexendTextStyle.regular(12.sp, color: AppColors.black),
+                decoration: _whiteDecoration(hint: 'Agama'),
+              ),
             ),
-            SizedBox(height: 120.h),
+            SizedBox(height: 20.h),
           ],
         ),
       ),

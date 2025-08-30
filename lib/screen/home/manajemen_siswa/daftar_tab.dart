@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sekolah/common/appbar.dart';
 import 'package:sekolah/common/colors.dart';
 import 'package:sekolah/common/lexend_textstyle.dart';
+import 'package:sekolah/screen/home/manajemen_siswa/template_tab.dart';
+import 'package:sekolah/screen/home/manajemen_siswa/upload_tab.dart';
 import 'manajemen_tabs.dart';
 import 'manual_tab.dart';
 
@@ -47,6 +49,13 @@ class _ManajemenSiswaPageState extends State<ManajemenSiswaPage> {
     for (final s in _students) {
       _selected[s['id']!] = false;
     }
+  }
+
+  Future<void> _handleDownloadTemplate() async {
+    // TODO: dnwld
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('Memulai download template CSV...')));
   }
 
   int get selectedCount => _selected.values.where((v) => v).length;
@@ -488,8 +497,10 @@ class _ManajemenSiswaPageState extends State<ManajemenSiswaPage> {
                           },
                         )
                         : _selectedTab == 2
-                        ? _placeholder('Download template CSV di sini')
-                        : _placeholder('Upload CSV / file di sini'),
+                        ? TemplateTab(onDownload: _handleDownloadTemplate)
+                        : _selectedTab == 3
+                        ? UploadTabPage()
+                        : SizedBox(),
               ),
             ),
           ),
@@ -497,114 +508,127 @@ class _ManajemenSiswaPageState extends State<ManajemenSiswaPage> {
       ),
       bottomNavigationBar: SafeArea(
         top: false,
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            border: Border(
-              top: BorderSide(color: AppColors.grey.withOpacity(0.16)),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 8,
-                offset: Offset(0, -2),
-              ),
-            ],
-          ),
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 200),
+          switchInCurve: Curves.easeOut,
+          switchOutCurve: Curves.easeIn,
           child:
               _selectedTab == 1
-                  ? SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        _manualKey.currentState?.submit();
-                      },
-                      icon: Icon(
-                        Icons.person_add,
-                        size: 18.sp,
-                        color: Colors.white,
-                      ),
-                      label: Text(
-                        'Tambah Siswa',
-                        style: LexendTextStyle.medium(
-                          12.sp,
+                  ? Padding(
+                    key: const ValueKey('manual_button'),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 12.h,
+                    ),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () => _manualKey.currentState?.submit(),
+                        icon: Icon(
+                          Icons.person_add,
+                          size: 18.sp,
                           color: Colors.white,
                         ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.main,
-                        padding: EdgeInsets.symmetric(vertical: 12.h),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.r),
+                        label: Text(
+                          'Tambah Siswa',
+                          style: LexendTextStyle.medium(
+                            12.sp,
+                            color: Colors.white,
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.main,
+                          padding: EdgeInsets.symmetric(vertical: 12.h),
+                          minimumSize: Size(double.infinity, 48.h),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.r),
+                          ),
                         ),
                       ),
                     ),
                   )
-                  : Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.group, color: AppColors.main, size: 18.sp),
-                          SizedBox(width: 8.w),
-                          Expanded(
-                            child: Text(
-                              '$selectedCount siswa dipilih',
-                              style: LexendTextStyle.regular(13.sp),
+                  : _selectedTab == 0
+                  ? Padding(
+                    key: const ValueKey('daftar_bottom'),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 12.h,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.group,
+                              color: AppColors.main,
+                              size: 18.sp,
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10.h),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton.icon(
-                          onPressed: () {
-                            if (selectedCount == 0) {
+                            SizedBox(width: 8.w),
+                            Expanded(
+                              child: Text(
+                                '$selectedCount siswa dipilih',
+                                style: LexendTextStyle.regular(13.sp),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10.h),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton.icon(
+                            onPressed: () {
+                              if (selectedCount == 0) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Pilih siswa terlebih dahulu',
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text('Pilih siswa terlebih dahulu'),
+                                  content: Text(
+                                    '$selectedCount siswa ditambahkan ke $_selectedClass',
+                                  ),
                                 ),
                               );
-                              return;
-                            }
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  '$selectedCount siswa ditambahkan ke $_selectedClass',
-                                ),
-                              ),
-                            );
-                            setState(() {
-                              for (final k in _selected.keys) {
-                                if (_selected[k] == true) _selected[k] = false;
-                              }
-                            });
-                          },
-                          icon: Icon(
-                            Icons.person_add,
-                            size: 18.sp,
-                            color: Colors.white,
-                          ),
-                          label: Text(
-                            'Tambah Siswa ke Kelas',
-                            style: LexendTextStyle.medium(
-                              12.sp,
+                              setState(() {
+                                for (final k in _selected.keys) {
+                                  if (_selected[k] == true) {
+                                    _selected[k] = false;
+                                  }
+                                }
+                              });
+                            },
+                            icon: Icon(
+                              Icons.person_add,
+                              size: 18.sp,
                               color: Colors.white,
                             ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.main,
-                            padding: EdgeInsets.symmetric(vertical: 12.h),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.r),
+                            label: Text(
+                              'Tambah Siswa ke Kelas',
+                              style: LexendTextStyle.medium(
+                                12.sp,
+                                color: Colors.white,
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.main,
+                              padding: EdgeInsets.symmetric(vertical: 12.h),
+                              minimumSize: Size(double.infinity, 48.h),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                  )
+                  : const SizedBox.shrink(),
         ),
       ),
     );
