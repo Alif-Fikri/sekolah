@@ -17,7 +17,7 @@ class CustomBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 16.h),
+      padding: EdgeInsets.symmetric(vertical: 8.h),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -40,7 +40,7 @@ class CustomBottomNav extends StatelessWidget {
               curve: Curves.easeOut,
               transform: Matrix4.translationValues(
                 0,
-                isSelected ? -40.h : -10.h,
+                isSelected ? -30.h : -10.h,
                 0,
               ),
               child: AnimatedScale(

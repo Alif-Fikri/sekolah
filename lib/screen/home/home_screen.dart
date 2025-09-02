@@ -289,25 +289,38 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _quickAction(String assetPath, String label, VoidCallback onTap) {
-    return OutlinedButton(
-      onPressed: onTap,
-      style: OutlinedButton.styleFrom(
-        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.r),
-        ),
-        side: BorderSide(color: Colors.grey.shade500),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(assetPath, height: 18.h, width: 18.w),
-          SizedBox(width: 4.w),
-          Text(
-            label,
-            style: LexendTextStyle.regular(13.sp, color: Colors.black),
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.15), // warna shadow
+            blurRadius: 6,
+            offset: Offset(0, 3),
           ),
         ],
+        borderRadius: BorderRadius.circular(10.r),
+      ),
+      child: OutlinedButton(
+        onPressed: onTap,
+        style: OutlinedButton.styleFrom(
+          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.r),
+          ),
+          side: BorderSide(color: Colors.grey.shade500),
+          backgroundColor: Colors.white,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(assetPath, height: 18.h, width: 18.w),
+            SizedBox(width: 4.w),
+            Text(
+              label,
+              style: LexendTextStyle.regular(13.sp, color: Colors.black),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -319,6 +332,15 @@ class _HomePageState extends State<HomePage> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: Colors.grey.shade500),
+        color: Colors.white, 
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3), 
+            spreadRadius: 1,
+            blurRadius: 6, 
+            offset: Offset(0, 3), 
+          ),
+        ],
       ),
       child: Row(
         children: [

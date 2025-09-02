@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sekolah/common/colors.dart';
 import 'package:sekolah/common/lexend_textstyle.dart';
-import 'package:sekolah/common/textfield.dart';
+import 'package:sekolah/common/text_field.dart';
+import 'package:sekolah/common/custom_toast.dart';
+import 'package:sekolah/screen/auth/register/provider/register_provider.dart';
 
-class RegisterScreen extends StatefulWidget {
+class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  ConsumerState<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   bool _isButtonPressed = false;
   bool _isSLB = false;
   String? _selectedSchoolLevel;
@@ -24,7 +27,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _nikController = TextEditingController();
   final TextEditingController _nuptkController = TextEditingController();
   final TextEditingController _schoolNameController = TextEditingController();
-  final List<String> _schoolLevels = ['SD', 'SMP', 'SMA'];
+  final List<String> _schoolLevels = ['SD', 'SMP', 'SMA', 'SLB'];
 
   @override
   void dispose() {
@@ -38,8 +41,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
+  void _onSubmit() async {
+    final regState = ref.read(registerProvider);
+    if (regState.isLoading) return;
+
+    if (_passwordController.text != _confirmPasswordController.text) {
+      ToastHelper.showError('Kata sandi tidak cocok');
+      return;
+    }
+
+    final notifier = ref.read(registerProvider.notifier);
+    await notifier.registerTeacher(
+      name: _nameController.text.trim(),
+      email: _emailController.text.trim(),
+      password: _passwordController.text,
+      nik: _nikController.text.trim(),
+      nuptk:
+          _nuptkController.text.trim().isEmpty
+              ? null
+              : _nuptkController.text.trim(),
+      schoolName: _schoolNameController.text.trim(),
+      schoolLevel: _selectedSchoolLevel ?? '',
+      isSlb: _isSLB,
+    );
+
+    final newState = ref.read(registerProvider);
+    if (newState.success) {
+      Future.microtask(() => Navigator.pop(context));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final regState = ref.watch(registerProvider);
+
     return Scaffold(
       backgroundColor: AppColors.splash,
       body: Stack(
@@ -64,9 +99,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
           ),
           DraggableScrollableSheet(
-            initialChildSize: 0.65,
-            minChildSize: 0.65,
-            maxChildSize: 0.65,
+            initialChildSize: 0.68,
+            minChildSize: 0.68,
+            maxChildSize: 0.95,
             builder: (context, scrollController) {
               return Container(
                 decoration: BoxDecoration(
@@ -137,8 +172,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       SizedBox(height: 16.h),
                       CustomTextField(
                         controller: _nuptkController,
-                        hintText:
-                            'NUPTK (Nomor Unik Pendidik dan Tenaga Kependidikan)',
+                        hintText: 'NUPTK (Nomor Unik Pendidik)',
                         icon: Icons.work_outline,
                       ),
                       SizedBox(height: 16.h),
@@ -153,7 +187,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           borderRadius: BorderRadius.circular(12.r),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
+                              color: Colors.black.withOpacity(0.08),
                               spreadRadius: 1,
                               blurRadius: 4,
                               offset: const Offset(0, 2),
@@ -187,11 +221,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     ),
                                   );
                                 }).toList(),
-                            onChanged: (newValue) {
-                              setState(() {
-                                _selectedSchoolLevel = newValue;
-                              });
-                            },
+                            onChanged:
+                                (newValue) => setState(
+                                  () => _selectedSchoolLevel = newValue,
+                                ),
                             style: LexendTextStyle.medium(12.sp),
                             isExpanded: true,
                           ),
@@ -227,11 +260,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               value: _isSLB,
                               activeColor: AppColors.splash,
                               checkColor: Colors.black,
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  _isSLB = value ?? false;
-                                });
-                              },
+                              onChanged:
+                                  (v) => setState(() => _isSLB = v ?? false),
                             ),
                           ],
                         ),
@@ -247,74 +277,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         hintText: 'Konfirmasi Kata Sandi',
                       ),
                       SizedBox(height: 20.h),
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            _isButtonPressed = true;
-                          });
-                          Future.delayed(const Duration(milliseconds: 300), () {
-                            setState(() {
-                              _isButtonPressed = false;
-                            });
-                          });
-                          if (_passwordController.text !=
-                              _confirmPasswordController.text) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'Kata sandi tidak cocok',
-                                  style: LexendTextStyle.medium(12.sp),
-                                ),
-                                backgroundColor: Colors.red,
-                              ),
-                            );
-                          } else if (_nameController.text.isEmpty ||
-                              _emailController.text.isEmpty ||
-                              _nikController.text.isEmpty ||
-                              _schoolNameController.text.isEmpty ||
-                              _selectedSchoolLevel == null) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'Harap lengkapi semua field yang wajib diisi',
-                                  style: LexendTextStyle.medium(12.sp),
-                                ),
-                                backgroundColor: Colors.red,
-                              ),
-                            );
-                          } else {
-                            // TODO: proses registrasi
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              _isButtonPressed
-                                  ? AppColors.splash
-                                  : Colors.white,
-                          elevation: 3,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 40.w,
-                            vertical: 12.h,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.r),
-                            side: BorderSide(
-                              color:
-                                  _isButtonPressed
-                                      ? Colors.transparent
-                                      : AppColors.splash,
+                      SizedBox(
+                        width: double.infinity,
+                        height: 48.h,
+                        child: ElevatedButton(
+                          onPressed: regState.isLoading ? null : _onSubmit,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.r),
+                              side: BorderSide(color: AppColors.splash),
                             ),
                           ),
-                        ),
-                        child: Text(
-                          'Daftar',
-                          style: LexendTextStyle.medium(
-                            12.sp,
-                            color:
-                                _isButtonPressed
-                                    ? Colors.white
-                                    : AppColors.text1,
-                          ),
+                          child:
+                              regState.isLoading
+                                  ? SizedBox(
+                                    width: 18.w,
+                                    height: 18.h,
+                                    child: CircularProgressIndicator(
+                                      color: AppColors.splash,
+                                      strokeWidth: 2,
+                                    ),
+                                  )
+                                  : Text(
+                                    'Daftar',
+                                    style: LexendTextStyle.medium(
+                                      12.sp,
+                                      color: AppColors.text1,
+                                    ),
+                                  ),
                         ),
                       ),
                       SizedBox(height: 24.h),
@@ -329,9 +320,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
+                            onTap: () => Navigator.pop(context),
                             child: Text(
                               'Masuk',
                               style: LexendTextStyle.semiBold(

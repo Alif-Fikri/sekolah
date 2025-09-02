@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sekolah/common/appbar.dart';
 import 'package:sekolah/common/colors.dart';
 import 'package:sekolah/common/lexend_textstyle.dart';
-import 'package:sekolah/common/inputfield.dart';
+import 'package:sekolah/common/input_field.dart';
 
 class RekapAbsensiPage extends StatefulWidget {
   const RekapAbsensiPage({super.key});
@@ -612,7 +612,7 @@ class _RekapAbsensiPageState extends State<RekapAbsensiPage> {
                             ),
                             SizedBox(height: 4.h),
                             Text(
-                              'Export data absensi ke format CSV sesuai filter',
+                              'Export absensi ke format CSV sesuai filter',
                               textAlign: TextAlign.center,
                               style: LexendTextStyle.light(
                                 11.sp,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sekolah/common/appbar.dart';
 import 'package:sekolah/common/colors.dart';
-import 'package:sekolah/common/inputfield.dart';
+import 'package:sekolah/common/input_field.dart';
 import 'package:sekolah/common/lexend_textstyle.dart';
 
 class CreateClassPage extends StatefulWidget {

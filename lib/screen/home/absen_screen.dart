@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sekolah/common/appbar.dart';
 import 'package:sekolah/common/colors.dart';
-import 'package:sekolah/common/inputfield.dart';
+import 'package:sekolah/common/input_field.dart';
 import 'package:sekolah/common/lexend_textstyle.dart';
 
 class AbsensiPage extends StatefulWidget {
@@ -205,6 +205,7 @@ class _AbsensiPageState extends State<AbsensiPage> {
                             ],
                           ),
                           child: DropdownButtonFormField<String>(
+                            dropdownColor: AppColors.white,
                             isExpanded: true,
                             value: _selectedClass,
                             items:
@@ -272,6 +273,7 @@ class _AbsensiPageState extends State<AbsensiPage> {
                             ],
                           ),
                           child: DropdownButtonFormField<String>(
+                            dropdownColor: AppColors.white,
                             isExpanded: true,
                             value: _selectedSubject,
                             items:
@@ -450,6 +452,7 @@ class _AbsensiPageState extends State<AbsensiPage> {
                           ),
                           SizedBox(height: 10.h),
                           DropdownButtonFormField<String>(
+                            dropdownColor: AppColors.white,
                             value: _attendanceStatus[id],
                             items:
                                 ['Hadir', 'Izin', 'Sakit', 'Alpha']

@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sekolah/common/colors.dart';
+import 'package:sekolah/common/custom_toast.dart';
 import 'package:sekolah/common/lexend_textstyle.dart';
-import 'package:sekolah/common/textfield.dart';
-import 'package:sekolah/screen/auth/register_screen.dart';
+import 'package:sekolah/common/text_field.dart';
+import 'package:sekolah/common/validators.dart';
+import 'package:sekolah/screen/auth/register/screen/register_screen.dart';
 import 'package:sekolah/screen/home/home_menu.dart';
+import 'package:sekolah/screen/auth/login/provider/login_provider.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  bool _isButtonPressed = false;
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -25,8 +28,40 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  void _doLogin() {
+    final email = _usernameController.text.trim();
+    final password = _passwordController.text.trim();
+
+    final emailErr = Validators.validateEmail(email);
+    final passErr = Validators.validatePassword(password);
+    if (emailErr != null) {
+      ToastHelper.showError(emailErr);
+      return;
+    }
+    if (passErr != null) {
+      ToastHelper.showError(passErr);
+      return;
+    }
+
+    ref.read(authProvider.notifier).login(email, password);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authProvider);
+
+    ref.listen<AuthState>(authProvider, (previous, next) {
+      if (next.auth != null && previous?.auth == null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const HomeMenu()),
+        );
+      }
+      if (next.error != null && next.error != previous?.error) {
+        ScaffoldMessenger.of(context);
+      }
+    });
+
     return Scaffold(
       backgroundColor: AppColors.splash,
       body: Stack(
@@ -64,10 +99,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(),
-                      spreadRadius: 5,
-                      blurRadius: 20,
-                      offset: const Offset(0, 9),
+                      color: Colors.black.withOpacity(0.12),
+                      spreadRadius: 2,
+                      blurRadius: 10,
+                      offset: const Offset(0, 6),
                     ),
                   ],
                 ),
@@ -124,50 +159,39 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       SizedBox(height: 20.h),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => HomeMenu()),
-                          );
-                          setState(() {
-                            _isButtonPressed = true;
-                          });
-                          Future.delayed(const Duration(milliseconds: 300), () {
-                            setState(() {
-                              _isButtonPressed = false;
-                            });
-                          });
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              _isButtonPressed
-                                  ? AppColors.splash
-                                  : Colors.white,
-                          elevation: 3,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 40.w,
-                            vertical: 12.h,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.r),
-                            side: BorderSide(
-                              color:
-                                  _isButtonPressed
-                                      ? Colors.transparent
-                                      : AppColors.splash,
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: authState.isLoading ? null : _doLogin,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            elevation: 3,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 40.w,
+                              vertical: 12.h,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.r),
+                              side: BorderSide(color: AppColors.splash),
                             ),
                           ),
-                        ),
-                        child: Text(
-                          'Masuk',
-                          style: LexendTextStyle.medium(
-                            12.sp,
-                            color:
-                                _isButtonPressed
-                                    ? Colors.white
-                                    : AppColors.text1,
-                          ),
+                          child:
+                              authState.isLoading
+                                  ? SizedBox(
+                                    height: 18.h,
+                                    width: 18.h,
+                                    child: const CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: AppColors.splash,
+                                    ),
+                                  )
+                                  : Text(
+                                    'Masuk',
+                                    style: LexendTextStyle.medium(
+                                      12.sp,
+                                      color: AppColors.text1,
+                                    ),
+                                  ),
                         ),
                       ),
                       SizedBox(height: 24.h),
@@ -205,7 +229,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => RegisterScreen(),
+                                  builder: (context) => const RegisterScreen(),
                                 ),
                               );
                             },

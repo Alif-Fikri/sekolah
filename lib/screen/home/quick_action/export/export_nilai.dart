@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sekolah/common/appbar.dart';
 import 'package:sekolah/common/colors.dart';
 import 'package:sekolah/common/lexend_textstyle.dart';
-import 'package:sekolah/common/inputfield.dart';
+import 'package:sekolah/common/input_field.dart';
 
 class ExportNilaiPage extends StatefulWidget {
   const ExportNilaiPage({super.key});
