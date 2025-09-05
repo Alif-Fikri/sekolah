@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sekolah/common/lexend_textstyle.dart';
 import 'package:sekolah/screen/auth/login/screen/login_screen.dart';
 
@@ -56,10 +57,8 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
         );
       } else {
         Future.delayed(const Duration(seconds: 1), () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const LoginScreen()),
-          );
+          if (!mounted) return;
+          context.go('/login');
         });
         _autoPageTimer?.cancel();
       }
@@ -78,10 +77,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
     if (_currentPage < _pages.length - 1) {
       _goToPage(_currentPage + 1);
     } else {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-      );
+      context.goNamed("login");
     }
   }
 

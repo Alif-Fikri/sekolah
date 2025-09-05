@@ -15,7 +15,6 @@ class RegisterScreen extends ConsumerStatefulWidget {
 }
 
 class _RegisterScreenState extends ConsumerState<RegisterScreen> {
-  bool _isButtonPressed = false;
   bool _isSLB = false;
   String? _selectedSchoolLevel;
 
@@ -66,8 +65,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     );
 
     final newState = ref.read(registerProvider);
-    if (newState.success) {
-      Future.microtask(() => Navigator.pop(context));
+
+    if (!newState.success && mounted) {
+      Navigator.pop(context);
     }
   }
 
@@ -150,6 +150,14 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         ),
                       ),
                       SizedBox(height: 24.h),
+                      Text(
+                        "Data Akun",
+                        style: LexendTextStyle.semiBold(
+                          14.sp,
+                          color: AppColors.text1,
+                        ),
+                      ),
+                      SizedBox(height: 12.h),
                       CustomTextField(
                         controller: _nameController,
                         hintText: 'Nama Lengkap',
@@ -163,19 +171,25 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         keyboardType: TextInputType.emailAddress,
                       ),
                       SizedBox(height: 16.h),
-                      CustomTextField(
-                        controller: _nikController,
-                        hintText: 'NIK (Nomor Induk Kependudukan)',
-                        icon: Icons.badge_outlined,
-                        keyboardType: TextInputType.number,
+                      CustomPasswordField(
+                        controller: _passwordController,
+                        hintText: 'Kata Sandi',
                       ),
                       SizedBox(height: 16.h),
-                      CustomTextField(
-                        controller: _nuptkController,
-                        hintText: 'NUPTK (Nomor Unik Pendidik)',
-                        icon: Icons.work_outline,
+                      CustomPasswordField(
+                        controller: _confirmPasswordController,
+                        hintText: 'Konfirmasi Kata Sandi',
                       ),
-                      SizedBox(height: 16.h),
+
+                      SizedBox(height: 24.h),
+                      Text(
+                        "Data Sekolah",
+                        style: LexendTextStyle.semiBold(
+                          14.sp,
+                          color: AppColors.text1,
+                        ),
+                      ),
+                      SizedBox(height: 12.h),
                       CustomTextField(
                         controller: _schoolNameController,
                         hintText: 'Nama Sekolah',
@@ -231,50 +245,72 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         ),
                       ),
                       SizedBox(height: 16.h),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.splash,
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 24.w,
-                          vertical: 2.h,
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.accessibility_new,
-                              color: Colors.grey[600],
-                              size: 20.h,
-                            ),
-                            SizedBox(width: 16.w),
-                            Text(
-                              'Apakah SLB?',
-                              style: LexendTextStyle.medium(
-                                12.sp,
-                                color: Colors.grey[600],
+                      GestureDetector(
+                        onTap: () => setState(() => _isSLB = !_isSLB),
+                        child: Container(
+                          height: 48.h,
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          decoration: BoxDecoration(
+                            color: AppColors.splash,
+                            borderRadius: BorderRadius.circular(12.r),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.08),
+                                spreadRadius: 1,
+                                blurRadius: 4,
+                                offset: const Offset(0, 2),
                               ),
-                            ),
-                            const Spacer(),
-                            Checkbox(
-                              value: _isSLB,
-                              activeColor: AppColors.splash,
-                              checkColor: Colors.black,
-                              onChanged:
-                                  (v) => setState(() => _isSLB = v ?? false),
-                            ),
-                          ],
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.accessibility_new,
+                                color: Colors.grey[600],
+                                size: 20.h,
+                              ),
+                              SizedBox(width: 16.w),
+                              Expanded(
+                                child: Text(
+                                  'Sekolah Luar Biasa (SLB)',
+                                  style: LexendTextStyle.medium(
+                                    12.sp,
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                              ),
+                              Checkbox(
+                                value: _isSLB,
+                                activeColor: AppColors.splash,
+                                checkColor: Colors.black,
+                                onChanged:
+                                    (v) => setState(() => _isSLB = v ?? false),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      SizedBox(height: 16.h),
-                      CustomPasswordField(
-                        controller: _passwordController,
-                        hintText: 'Kata Sandi',
+
+                      SizedBox(height: 24.h),
+                      Text(
+                        "Data Identitas (Opsional)",
+                        style: LexendTextStyle.semiBold(
+                          14.sp,
+                          color: AppColors.text1,
+                        ),
+                      ),
+                      SizedBox(height: 12.h),
+                      CustomTextField(
+                        controller: _nikController,
+                        hintText: 'NIK',
+                        icon: Icons.badge_outlined,
+                        keyboardType: TextInputType.number,
                       ),
                       SizedBox(height: 16.h),
-                      CustomPasswordField(
-                        controller: _confirmPasswordController,
-                        hintText: 'Konfirmasi Kata Sandi',
+                      CustomTextField(
+                        controller: _nuptkController,
+                        hintText: 'NUPTK',
+                        icon: Icons.work_outline,
                       ),
                       SizedBox(height: 20.h),
                       SizedBox(

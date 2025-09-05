@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sekolah/common/colors.dart';
 import 'package:sekolah/common/custom_toast.dart';
 import 'package:sekolah/common/lexend_textstyle.dart';
@@ -52,10 +53,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     ref.listen<AuthState>(authProvider, (previous, next) {
       if (next.auth != null && previous?.auth == null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => const HomeMenu()),
-        );
+        context.goNamed("home");
       }
       if (next.error != null && next.error != previous?.error) {
         ScaffoldMessenger.of(context);

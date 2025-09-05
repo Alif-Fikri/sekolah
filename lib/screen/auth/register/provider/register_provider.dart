@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sekolah/common/custom_toast.dart';
 import 'package:sekolah/common/validators.dart';
 import 'package:sekolah/screen/auth/register/service/register_service.dart';
